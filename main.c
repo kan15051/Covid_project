@@ -109,7 +109,7 @@ int main(){
         }
         else if(strcmp(command,"exit")==0){
             system("git add --all");
-            system("git commit -a");
+            system("git commit -m 12345");
             system("git push");
             return 0;
         }
