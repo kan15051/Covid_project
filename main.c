@@ -57,6 +57,8 @@ void Inipro(char* );
 
 void Showpro(char* );
 
+int Checksuc(char*);
+
 int main(){
     int status=0;
     UserInfo user;
@@ -121,12 +123,24 @@ int GetUserInfo(UserInfo* User){
     char filename[100];
     printf("Enter Firstname: ");
     fgets(User->FirstName,sizeof(User->FirstName),stdin);//firstname
+    while(strlen(User->FirstName)==1){
+        printf("Enter Firstname (enter something): ");
+        fgets(User->FirstName,sizeof(User->FirstName),stdin);//firstname
+    }
     User->FirstName[strlen(User->FirstName)-1]='\0';
     printf("Enter Lastname: ");
     fgets(User->LastName,100,stdin);//lastname
+    while(strlen(User->LastName)==1){
+        printf("Enter Lastname (enter something): ");
+        fgets(User->LastName,100,stdin);//lastname
+    }
     User->LastName[strlen(User->LastName)-1]='\0';
     printf("Enter Username: ");
     fgets(User->UserName,100,stdin);//username
+    while(strlen(User->UserName)==1){
+        printf("Enter Username (enter something): ");
+        fgets(User->UserName,100,stdin);//username
+    }
     User->UserName[strlen(User->UserName)-1]='\0';
     GetFilename(User->UserName, filename);
     while(CheckExist(filename)){
@@ -150,28 +164,58 @@ int GetUserInfo(UserInfo* User){
     }
     printf("Enter Password: ");
     fgets(User->PassWord,100,stdin);//password
+    while(strlen(User->PassWord)==1||Checksuc(User->PassWord)==0||strlen(User->PassWord)<10){
+        printf("The password must consist of at least 1 capital letter, 1 lower case letter, 1 number and the password length must not less than 10\n");
+        printf("Enter Password (enter something): ");
+        fgets(User->PassWord,100,stdin);//username
+    }
     User->PassWord[strlen(User->PassWord)-1]='\0';
     printf("Please Fill Your Adress\n");
     printf("House Number: ");
     fgets(User->HouseNO,100,stdin);//houseno.
+    while(strlen(User->HouseNO)==1){
+        printf("Enter House Number (enter something): ");
+        fgets(User->HouseNO,100,stdin);//username
+    }
     User->HouseNO[strlen(User->HouseNO)-1]='\0';
     printf("Village: ");
     fgets(User->Village,100,stdin);//village
+    if(strlen(User->Village)==1){
+        strcpy(User->Village,"-");
+    }
     User->Village[strlen(User->Village)-1]='\0';
     printf("Lane: ");
     fgets(User->Lane,100,stdin);//lane
+    if(strlen(User->Lane)==1){
+        strcpy(User->Lane,"-");
+    }
     User->Lane[strlen(User->Lane)-1]='\0';
     printf("Road: ");
     fgets(User->Road,100,stdin);//road
+    if(strlen(User->Lane)==1){
+        strcpy(User->Lane,"-");
+    }
     User->Road[strlen(User->Road)-1]='\0';
     printf("Sub-district: ");
     fgets(User->SubDistrict,100,stdin);//subdistrict
+    while(strlen(User->SubDistrict)==1){
+        printf("Enter Sub-district (enter something): ");
+        fgets(User->SubDistrict,100,stdin);//username
+    }
     User->SubDistrict[strlen(User->SubDistrict)-1]='\0';
     printf("District: ");
     fgets(User->District,100,stdin);//district
+    while(strlen(User->District)==1){
+        printf("Enter district (enter something): ");
+        fgets(User->District,100,stdin);//username
+    }
     User->District[strlen(User->District)-1]='\0';
     printf("Province: ");
     fgets(User->Province,100,stdin);//province
+    while(strlen(User->Province)==1){
+        printf("Enter province (enter something): ");
+        fgets(User->Province,100,stdin);//username
+    }
     User->Province[strlen(User->Province)-1]='\0';
     printf("Postal Code: ");
     fgets(User->PostalCode,100,stdin);//postalcode
@@ -291,9 +335,17 @@ int Login(char* Username){
     printf("************LOGIN************\n");
     printf("Enter Username: ");
     fgets(username,100,stdin);
+    while(strlen(username)==1){
+        printf("Enter Username (enter something): ");
+        fgets(username,100,stdin);
+    }
     username[strlen(username)-1]='\0';
     printf("Enter Password: ");
     fgets(password,100,stdin);
+    while(strlen(password)==1){
+        printf("Enter Password (enter something): ");
+        fgets(password,100,stdin);
+    }
     password[strlen(password)-1]='\0';
     if(CheckPass(username, password)){
         printf("Login successful\n");
@@ -754,4 +806,25 @@ void Showpro(char* pro){
         printf("Lastname: %s\n", province.Lastname[i]);
     }
     */
+}
+
+int Checksuc(char* pass){
+    int a=0, b=0, c=0;
+    for(int i=0; i<strlen(pass)-1; i++){
+        if(pass[i]>=48&&pass[i]<=57){
+            a=1;
+        }
+        else if(pass[i]>=65&&pass[i]<=90){
+            b=1;
+        }
+        else if(pass[i]>=97&&pass[i]<=122){
+            c=1;
+        }
+    }
+    if(a+b+c==3){
+        return 1;
+    }
+    else{
+        return 0;
+    }
 }
