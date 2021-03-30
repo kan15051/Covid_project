@@ -61,6 +61,7 @@ int main(){
     int status=0;
     UserInfo user;
     char username[100]="\0",command[100];
+    system("git pull");
     printf("register        for account register\nlogin           for login\nlogout          for logout\nshowinfo        show user infomation\ndosurvey        to do COVID-19 survey\nexit            exit the program\nhelp            show command\nprovince        show province infomation\n");
     while(1){
         printf("Enter command: ");
